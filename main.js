@@ -8,11 +8,12 @@ let operand1 = "";
 let operand2 = "";
 let operator = "";
 let clearDisplay = false;
+let clearOperator = false;
 // let result = 0;
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
-        console.log(button.innerHTML);
+        // console.log(button.innerHTML);
         performAction(button.innerHTML);
     })
 });
@@ -55,6 +56,7 @@ const performAction = (btnText) => {
                     console.log("operator: ", operator);
                     console.log("operand2: ", operand2);
                     let result = eval(operand1 + operator + operand2);
+                    clearOperator = false;
                     console.log(result);
                     display.value = result;
                     operand1 = result;
@@ -76,25 +78,42 @@ const performAction = (btnText) => {
                             operator = btnText;
                         console.log("operator: ", operator);
                         clearDisplay = true;
+                        clearOperator = true;
+                        console.log("clearOperator: ", clearOperator);
                     }
                     else {
                         if (operand2 == "" && operator != "") {
-                            // operator = btnText;
-                            clearDisplay = true;
-                            operand2 = display.value;
-                            console.log("operand2: ", operand2);
-                            let result = eval(operand1 + operator + operand2);
-                            console.log(result);
-                            display.value = result;
-                            operand1 = result;
-                            operand2 = "";
-                            if (btnText == "X")
-                                operator = "*";
-                            else
-                                operator = btnText;
-                            console.log("operand1: ", operand1);
-                            console.log("operator: ", operator);
-                            console.log("operand2: ", operand2);
+                            if (clearOperator == false) {
+                                // operator = btnText;
+                                clearDisplay = true;
+                                operand2 = display.value;
+                                console.log("operand2: ", operand2);
+                                let result = eval(operand1 + operator + operand2);
+                                console.log(result);
+                                display.value = result;
+                                operand1 = result;
+                                operand2 = "";
+                                if (btnText == "X")
+                                    operator = "*";
+                                else
+                                    operator = btnText;
+                                clearOperator = true;
+                                console.log("operand1: ", operand1);
+                                console.log("operator: ", operator);
+                                console.log("operand2: ", operand2);
+                                console.log("clearOperator: ", clearOperator);
+                            }
+                            else {
+                                if (btnText == "X")
+                                    operator = "*";
+                                else
+                                    operator = btnText;
+                                clearOperator = true;
+                                console.log("operand1: ", operand1);
+                                console.log("operator: ", operator);
+                                console.log("operand2: ", operand2);
+                                console.log("**clearOperator: ", clearOperator);
+                            }
                         }
                         else {
                             if (operand1 != "") {
@@ -104,6 +123,8 @@ const performAction = (btnText) => {
                                     operator = btnText;
                                 console.log("operator: ", operator);
                                 clearDisplay = true;
+                                clearOperator = true;
+                                console.log("clearOperator: ", clearOperator);
                             }
                         }
 
@@ -114,14 +135,17 @@ const performAction = (btnText) => {
                     if (display.value == "0" && operand1 != "0" && operator == "") {
                         display.value = btnText;
                         clearDisplay = false;
+                        clearOperator = false;
                     }
                     else {
                         if (clearDisplay) {
                             display.value = btnText;
                             clearDisplay = false;
+                            clearOperator = false;
                         }
                         else {
                             display.value = display.value + btnText;
+                            clearOperator = false;
                         }
                     }
                 }
